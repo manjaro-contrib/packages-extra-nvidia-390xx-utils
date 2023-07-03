@@ -12,7 +12,7 @@
 pkgbase=nvidia-390xx-utils
 pkgname=('nvidia-390xx-utils' 'opencl-nvidia-390xx' 'nvidia-390xx-dkms' 'mhwd-nvidia-390xx')
 pkgver=390.157
-pkgrel=6
+pkgrel=7
 arch=('x86_64')
 url="https://www.nvidia.com/"
 license=('custom')
@@ -26,6 +26,7 @@ source=("https://us.download.nvidia.com/XFree86/Linux-x86_64/${pkgver}/${_pkg}.r
         'kernel-4.16+-memory-encryption.patch'
         'kernel-6.2.patch'
         'kernel-6.3.patch'
+        'kernel-6.4.patch'
         )
 sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '11176f1c070bbdbfaa01a3743ec065fe71ff867b9f72f1dce0de0339b5873bb5'
@@ -34,7 +35,8 @@ sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '4fbfd461f939f18786e79f8dba5fdb48be9f00f2ff4b1bb2f184dbce42dd6fc3'
             '6c5f5b11dbb43f40f4e2c6a2b5417f44b50cf29d16bbd091420b7e737acb6ccd'
             'a94d34cda96d443d02d992ee7962ce7c9949134b899e366fc3dafaf48bc19ebe'
-            '4284f95f808df4e43afc4632e3fc1f87da1a805f0f6f9af1f6b519c7cf7562b4')
+            '4284f95f808df4e43afc4632e3fc1f87da1a805f0f6f9af1f6b519c7cf7562b4'
+            '6a73ba0760c278a835ec5dcc6f3a9e0f8f0787fde95e832c38e8038152242708')
 
 create_links() {
     # create soname links
@@ -55,16 +57,14 @@ prepare() {
     sed -i 's/__NV_VK_ICD__/libGLX_nvidia.so.0/' nvidia_icd.json.template
 
     # Restore phys_to_dma support (still needed for 390.138)
-    # From loqs via https://bugs.archlinux.org/task/58074
+    # https://bugs.archlinux.org/task/58074
     patch -Np1 -i ../kernel-4.16+-memory-encryption.patch
 
-    # From Joan Bruguera via Ike Devolder
     patch -Np1 -i ../kernel-6.2.patch
 
     cd kernel
-
-    # From Ike Devolder
     patch -Np1 -i ../../kernel-6.3.patch
+    patch -Np1 -i ../../kernel-6.4.patch
 
     sed -i "s/__VERSION_STRING/${pkgver}/" dkms.conf
     sed -i 's/__JOBS/`nproc`/' dkms.conf
