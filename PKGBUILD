@@ -12,7 +12,7 @@
 pkgbase=nvidia-390xx-utils
 pkgname=('nvidia-390xx-utils' 'opencl-nvidia-390xx' 'nvidia-390xx-dkms' 'mhwd-nvidia-390xx')
 pkgver=390.157
-pkgrel=9
+pkgrel=10
 arch=('x86_64')
 url="https://www.nvidia.com/"
 license=('custom')
@@ -29,6 +29,7 @@ source=("https://us.download.nvidia.com/XFree86/Linux-x86_64/${pkgver}/${_pkg}.r
         'kernel-6.4.patch'
         'kernel-6.5.patch'
         'kernel-6.6.patch'
+        'kernel-6.8.patch'
         )
 sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '11176f1c070bbdbfaa01a3743ec065fe71ff867b9f72f1dce0de0339b5873bb5'
@@ -40,7 +41,8 @@ sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '4284f95f808df4e43afc4632e3fc1f87da1a805f0f6f9af1f6b519c7cf7562b4'
             '6a73ba0760c278a835ec5dcc6f3a9e0f8f0787fde95e832c38e8038152242708'
             'bb74896e6f2554dcad5b3393583c92d15c2780ecb63817f5042a6df8fa919b52'
-            '11917658c2f4bb1d8c1a4603b9e3844cc9be10171fb6df0e9b482c07a3a3b6aa')
+            '11917658c2f4bb1d8c1a4603b9e3844cc9be10171fb6df0e9b482c07a3a3b6aa'
+            '4add71eff4d4c7970a518faa4c6fbf83879c6237b082a37eb6427de4f1b95bfe')
 
 create_links() {
     # create soname links
@@ -66,6 +68,7 @@ prepare() {
 
     patch -Np1 -i ../kernel-6.2.patch
     patch -Np1 -i ../kernel-6.6.patch
+    patch -Np1 -i ../kernel-6.8.patch
 
     cd kernel
     patch -Np1 -i ../../kernel-6.3.patch
