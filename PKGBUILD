@@ -12,7 +12,7 @@
 pkgbase=nvidia-390xx-utils
 pkgname=('nvidia-390xx-utils' 'opencl-nvidia-390xx' 'nvidia-390xx-dkms' 'mhwd-nvidia-390xx')
 pkgver=390.157
-pkgrel=11
+pkgrel=12
 arch=('x86_64')
 url="https://www.nvidia.com/"
 license=('custom')
@@ -23,6 +23,8 @@ source=("https://us.download.nvidia.com/XFree86/Linux-x86_64/${pkgver}/${_pkg}.r
         'nvidia-drm-outputclass.conf'
         'nvidia-390xx-utils.sysusers'
         'nvidia-390xx.rules'
+        'systemd-homed-override.conf'
+        'systemd-suspend-override.conf'
         'kernel-4.16+-memory-encryption.patch'
         'kernel-6.2.patch'
         'kernel-6.3.patch'
@@ -37,6 +39,8 @@ sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '089d6dc247c9091b320c418b0d91ae6adda65e170934d178cdd4e9bd0785b182'
             'd8d1caa5d72c71c6430c2a0d9ce1a674787e9272ccce28b9d5898ca24e60a167'
             '4fbfd461f939f18786e79f8dba5fdb48be9f00f2ff4b1bb2f184dbce42dd6fc3'
+            'c5aa7b8abe69e72bfdc6b9ee8afbfd350bcc557e894558f2e6e4087fa9aa0dd8'
+            '1d053c5078387021338cfc3a732bed61be1a20a549775573788e9134775c8149'
             '6c5f5b11dbb43f40f4e2c6a2b5417f44b50cf29d16bbd091420b7e737acb6ccd'
             'a94d34cda96d443d02d992ee7962ce7c9949134b899e366fc3dafaf48bc19ebe'
             '4284f95f808df4e43afc4632e3fc1f87da1a805f0f6f9af1f6b519c7cf7562b4'
@@ -231,6 +235,13 @@ package_nvidia-390xx-utils() {
     install -Dm644 NVIDIA_Changelog "${pkgdir}/usr/share/doc/nvidia/NVIDIA_Changelog"
     cp -r html "${pkgdir}/usr/share/doc/nvidia/"
     ln -s nvidia "${pkgdir}/usr/share/doc/nvidia-utils"
+
+    # Systemd 256
+    install -Dm644 "${srcdir}"/systemd-homed-override.conf "${pkgdir}"/usr/lib/systemd/systemd-homed.service.d/10-nvidia-no-freeze-session.conf
+    install -Dm644 "${srcdir}"/systemd-suspend-override.conf "${pkgdir}"/usr/lib/systemd/systemd-suspend.service.d/10-nvidia-no-freeze-session.conf
+    install -Dm644 "${srcdir}"/systemd-suspend-override.conf "${pkgdir}"/usr/lib/systemd/systemd-suspend-then-hibernate.service.d/10-nvidia-no-freeze-session.conf
+    install -Dm644 "${srcdir}"/systemd-suspend-override.conf "${pkgdir}"/usr/lib/systemd/systemd-hibernate.service.d/10-nvidia-no-freeze-session.conf
+    install -Dm644 "${srcdir}"/systemd-suspend-override.conf "${pkgdir}"/usr/lib/systemd/systemd-hybrid-sleep.service.d/10-nvidia-no-freeze-session.conf
 
     # distro specific files must be installed in /usr/share/X11/xorg.conf.d
     install -Dm644 "${srcdir}/nvidia-drm-outputclass.conf" "${pkgdir}/usr/share/X11/xorg.conf.d/10-nvidia-drm-outputclass.conf"
