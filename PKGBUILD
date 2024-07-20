@@ -12,7 +12,7 @@
 pkgbase=nvidia-390xx-utils
 pkgname=('nvidia-390xx-utils' 'opencl-nvidia-390xx' 'nvidia-390xx-dkms' 'mhwd-nvidia-390xx')
 pkgver=390.157
-pkgrel=13
+pkgrel=14
 arch=('x86_64')
 url="https://www.nvidia.com/"
 license=('custom')
@@ -32,6 +32,7 @@ source=("https://us.download.nvidia.com/XFree86/Linux-x86_64/${pkgver}/${_pkg}.r
         'kernel-6.5.patch'
         'kernel-6.6.patch'
         'kernel-6.8.patch'
+        'kernel-6.10.patch'
         'gcc14.patch'
         )
 sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
@@ -43,11 +44,12 @@ sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '1d053c5078387021338cfc3a732bed61be1a20a549775573788e9134775c8149'
             '6c5f5b11dbb43f40f4e2c6a2b5417f44b50cf29d16bbd091420b7e737acb6ccd'
             'a94d34cda96d443d02d992ee7962ce7c9949134b899e366fc3dafaf48bc19ebe'
-            '4284f95f808df4e43afc4632e3fc1f87da1a805f0f6f9af1f6b519c7cf7562b4'
-            '6a73ba0760c278a835ec5dcc6f3a9e0f8f0787fde95e832c38e8038152242708'
-            'bb74896e6f2554dcad5b3393583c92d15c2780ecb63817f5042a6df8fa919b52'
+            'd380ee05adc4cf2aeb673b72327fe6a4b3a43f7d1bb1823084228129e31e6c59'
+            '92f3cb65ee1b5d07b0a28d02424cd7ae1ad5705d407b5aa7d635da680b4c8568'
+            '10e50e41aca33d26f02df2ba53512cab7d3fbc0f49c161952e67cde619104b45'
             '11917658c2f4bb1d8c1a4603b9e3844cc9be10171fb6df0e9b482c07a3a3b6aa'
             '4add71eff4d4c7970a518faa4c6fbf83879c6237b082a37eb6427de4f1b95bfe'
+            'efc5e88c082d405d53c0a5b22891cd295620ebf02ef6b488ab752df772d5b4ba'
             'af840e7e03aa9cf311c0d1e32469596e5e728a0206cbe06f99bbc22e3de25a12')
 
 create_links() {
@@ -73,14 +75,15 @@ prepare() {
     patch -Np1 -i ../kernel-4.16+-memory-encryption.patch
 
     patch -Np1 -i ../kernel-6.2.patch
+    patch -Np1 -i ../kernel-6.3.patch
+    patch -Np1 -i ../kernel-6.4.patch
+    patch -Np1 -i ../kernel-6.5.patch
     patch -Np1 -i ../kernel-6.6.patch
     patch -Np1 -i ../kernel-6.8.patch
+    patch -Np1 -i ../kernel-6.10.patch
     patch -Np1 -i ../gcc14.patch
 
     cd kernel
-    patch -Np1 -i ../../kernel-6.3.patch
-    patch -Np1 -i ../../kernel-6.4.patch
-    patch -Np1 -i ../../kernel-6.5.patch
 
     sed -i "s/__VERSION_STRING/${pkgver}/" dkms.conf
     sed -i 's/__JOBS/`nproc`/' dkms.conf
