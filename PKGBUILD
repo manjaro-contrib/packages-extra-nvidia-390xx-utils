@@ -1,7 +1,6 @@
-# Maintainer:  Philip Müller <philm[at]manjaro[dog]org>
+# Maintainer: Mark Wagie <mark at manjaro dot org>
+# Maintainer: Philip Müller <philm[at]manjaro[dog]org>
 # Contributor: Helmut Stult
-
-# Arch credits:
 # Contributor: Jonathon Fernyhough
 # Contributor: vnctdj
 # Contributor: Alonso Rodriguez <alonsorodi20 (at) gmail (dot) com>
@@ -12,7 +11,7 @@
 pkgbase=nvidia-390xx-utils
 pkgname=('nvidia-390xx-utils' 'opencl-nvidia-390xx' 'nvidia-390xx-dkms' 'mhwd-nvidia-390xx')
 pkgver=390.157
-pkgrel=15
+pkgrel=16
 arch=('x86_64')
 url="https://www.nvidia.com/"
 license=('custom')
@@ -40,7 +39,7 @@ sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '11176f1c070bbdbfaa01a3743ec065fe71ff867b9f72f1dce0de0339b5873bb5'
             '089d6dc247c9091b320c418b0d91ae6adda65e170934d178cdd4e9bd0785b182'
             'd8d1caa5d72c71c6430c2a0d9ce1a674787e9272ccce28b9d5898ca24e60a167'
-            '4fbfd461f939f18786e79f8dba5fdb48be9f00f2ff4b1bb2f184dbce42dd6fc3'
+            '0e54249a7754b668b436f0f7aa7e95fff68edbb12a93dbee4660e09a8c695f84'
             'c5aa7b8abe69e72bfdc6b9ee8afbfd350bcc557e894558f2e6e4087fa9aa0dd8'
             '1d053c5078387021338cfc3a732bed61be1a20a549775573788e9134775c8149'
             '6c5f5b11dbb43f40f4e2c6a2b5417f44b50cf29d16bbd091420b7e737acb6ccd'
