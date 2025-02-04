@@ -11,7 +11,7 @@
 pkgbase=nvidia-390xx-utils
 pkgname=('nvidia-390xx-utils' 'opencl-nvidia-390xx' 'nvidia-390xx-dkms' 'mhwd-nvidia-390xx')
 pkgver=390.157
-pkgrel=18
+pkgrel=19
 arch=('x86_64')
 url="https://www.nvidia.com/"
 license=('custom')
@@ -35,6 +35,7 @@ source=("https://us.download.nvidia.com/XFree86/Linux-x86_64/${pkgver}/${_pkg}.r
         'gcc14.patch'
         'kernel-6.12.patch'
         'kernel-6.13.patch'
+        'kernel-6.14.patch'
         'make-modesetting-default.patch')
 sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '11176f1c070bbdbfaa01a3743ec065fe71ff867b9f72f1dce0de0339b5873bb5'
@@ -54,6 +55,7 @@ sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             'af840e7e03aa9cf311c0d1e32469596e5e728a0206cbe06f99bbc22e3de25a12'
             'dd38b6e66e6294917b83e1a1d3bb94a507de4e52c71872a3f80cb0a94538725e'
             '90cb95461eb9900ff52e8dba73f8d4fdc8ecf5357f881ef1269a14d818317445'
+            'e859f83365e5dfe9e8261358bdbec703b7b8b65dbece326ce7eed8088a06432a'
             '0f99c2a3457479da644eec92221d0150f197b7840a9eddbb538797a5311eb18e')
 
 create_links() {
@@ -91,6 +93,7 @@ prepare() {
     patch -Np1 -i ../make-modesetting-default.patch
 
     cd kernel
+    patch -Np1 -i ../../kernel-6.14.patch
 
     sed -i "s/__VERSION_STRING/${pkgver}/" dkms.conf
     sed -i 's/__JOBS/`nproc`/' dkms.conf
