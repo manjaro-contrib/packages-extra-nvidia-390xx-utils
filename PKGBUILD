@@ -1,7 +1,8 @@
 # Maintainer: Mark Wagie <mark at manjaro dot org>
 # Maintainer: Philip Müller <philm[at]manjaro[dog]org>
 # Contributor: Helmut Stult
-# Contributor: Jonathon Fernyhough
+# Contributor: Jonathon Fernyhough (RIP)
+# Contributor: Vasiliy Stelmachenok <ventureo@cachyos.org>
 # Contributor: vnctdj
 # Contributor: Alonso Rodriguez <alonsorodi20 (at) gmail (dot) com>
 # Contributor: Sven-Hendrik Haase <svenstaro@gmail.com>
@@ -11,7 +12,7 @@
 pkgbase=nvidia-390xx-utils
 pkgname=('nvidia-390xx-utils' 'opencl-nvidia-390xx' 'nvidia-390xx-dkms' 'mhwd-nvidia-390xx')
 pkgver=390.157
-pkgrel=20
+pkgrel=21
 arch=('x86_64')
 url="https://www.nvidia.com/"
 license=('custom')
@@ -31,13 +32,15 @@ source=("https://us.download.nvidia.com/XFree86/Linux-x86_64/${pkgver}/${_pkg}.r
         'kernel-6.5.patch'
         'kernel-6.6.patch'
         'kernel-6.8.patch'
+        'gcc-14.patch'
+        'gcc-15.patch'
         'kernel-6.10.patch'
-        'gcc14.patch'
+        'clang.patch'
         'kernel-6.12.patch'
         'kernel-6.13.patch'
         'kernel-6.14.patch'
-        'make-modesetting-default.patch'
-        'CFLAGS-Set-std-gnu17-for-all-compilation-flags.patch')
+        'kernel-6.15.patch'
+        'make-modesetting-default.patch')
 sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '11176f1c070bbdbfaa01a3743ec065fe71ff867b9f72f1dce0de0339b5873bb5'
             '089d6dc247c9091b320c418b0d91ae6adda65e170934d178cdd4e9bd0785b182'
@@ -52,13 +55,15 @@ sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '10e50e41aca33d26f02df2ba53512cab7d3fbc0f49c161952e67cde619104b45'
             '11917658c2f4bb1d8c1a4603b9e3844cc9be10171fb6df0e9b482c07a3a3b6aa'
             '4add71eff4d4c7970a518faa4c6fbf83879c6237b082a37eb6427de4f1b95bfe'
-            'efc5e88c082d405d53c0a5b22891cd295620ebf02ef6b488ab752df772d5b4ba'
-            'af840e7e03aa9cf311c0d1e32469596e5e728a0206cbe06f99bbc22e3de25a12'
+            'c6ef988c7b3d379b62bd0000285464c85342100a4822678df174fc60597d4281'
+            '5fd6cf3265e771f7ae0f3ccaebaf39a5354dd9ed184cc2c512ae15da6f755ff5'
+            '11585c97eca50f163e929ede4d010ba454a7efa8d119e283f3aad0f79eece084'
+            '4720a28debfec358b9f4f8abd36c05215bcba99b0eae241ea99ee16f046f9a29'
             'dd38b6e66e6294917b83e1a1d3bb94a507de4e52c71872a3f80cb0a94538725e'
-            '90cb95461eb9900ff52e8dba73f8d4fdc8ecf5357f881ef1269a14d818317445'
+            'd05256023b9ef2b43b72f3b5102d5c57f6e08d61cf3480b10feaa2f505980a95'
             'e859f83365e5dfe9e8261358bdbec703b7b8b65dbece326ce7eed8088a06432a'
-            '0f99c2a3457479da644eec92221d0150f197b7840a9eddbb538797a5311eb18e'
-            '38af201f559c49fa59d1d4d264ffb568ec2dd988d92aa9ba4e86a62a49ede53c')
+            'a26d5086fc2a7c99d5e26440aec86eacf43d71b618a3c866515e7f710bb2e163'
+            '994675c116840e4d1eecf457f67c468f973424f3ef6657c6b72bee88ebbb982e')
 
 create_links() {
     # create soname links
@@ -88,16 +93,17 @@ prepare() {
     patch -Np1 -i ../kernel-6.5.patch
     patch -Np1 -i ../kernel-6.6.patch
     patch -Np1 -i ../kernel-6.8.patch
+    patch -Np1 -i ../gcc-14.patch
+    patch -Np1 -i ../gcc-15.patch
     patch -Np1 -i ../kernel-6.10.patch
-    patch -Np1 -i ../gcc14.patch
+    patch -Np1 -i ../clang.patch
     patch -Np1 -i ../kernel-6.12.patch
     patch -Np1 -i ../kernel-6.13.patch
     patch -Np1 -i ../make-modesetting-default.patch
+    patch -Np1 -d kernel -i "${srcdir}"/kernel-6.14.patch
+    patch -Np1 -i ../kernel-6.15.patch
 
     cd kernel
-    patch -Np1 -i ../../kernel-6.14.patch
-    patch -Np1 -i ../../CFLAGS-Set-std-gnu17-for-all-compilation-flags.patch
-
     sed -i "s/__VERSION_STRING/${pkgver}/" dkms.conf
     sed -i 's/__JOBS/`nproc`/' dkms.conf
     sed -i 's/__DKMS_MODULES//' dkms.conf
