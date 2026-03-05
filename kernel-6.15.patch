@@ -42,7 +42,7 @@ index 9a8c693..3b7bc06 100644
 +ccflags-y += -std=gnu17
 +ccflags-y += -I$(src)/common/inc
 +ccflags-y += -I$(src)
-+ccflags-y += -Wall -Wno-deprecated-non-prototype -Wno-strict-prototypes $(DEFINES) $(INCLUDES) -Wsign-compare -Wno-cast-qual -Wno-error
++ccflags-y += -Wall -Wno-deprecated-non-prototype -Wno-implicit-function-declaration -Wno-strict-prototypes -Wno-incompatible-pointer-types $(DEFINES) $(INCLUDES) -Wsign-compare -Wno-cast-qual -Wno-error
 +ccflags-y += -D__KERNEL__ -DMODULE -DNVRM -DNV_VERSION_STRING=\"390.157\" -Wno-unused-function -Wuninitialized -fno-strict-aliasing -mno-red-zone -mcmodel=kernel -DNV_UVM_ENABLE -Wno-sign-compare -Wno-format-extra-args
 +ccflags-y += $(call cc-option,-Werror=undef,)
 +ccflags-y += -DNV_SPECTRE_V2=$(NV_SPECTRE_V2)
