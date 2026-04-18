@@ -55,10 +55,10 @@ index 57b5024..ef7dde6 100644
 +#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
 +    // Rel. commit "sysfb: Replace screen_info with sysfb_primary_display" (Thomas Zimmermann, 26 Nov 2025)
 +    const struct screen_info *si = &sysfb_primary_display.screen;
-+#elif NV_CHECK_EXPORT_SYMBOL(screen_info)
++#else
 +    const struct screen_info *si = &screen_info;
 +#endif
-+    if (si->orig_video_isVGA > 1)
++    if (si->orig_video_isVGA <= 1)
      {
          *pPhysicalAddress = 0;
          *pFbWidth = *pFbHeight = *pFbDepth = *pFbPitch = 0;
