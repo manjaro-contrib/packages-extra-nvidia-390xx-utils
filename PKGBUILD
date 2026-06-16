@@ -12,7 +12,7 @@
 pkgbase=nvidia-390xx-utils
 pkgname=('nvidia-390xx-utils' 'opencl-nvidia-390xx' 'nvidia-390xx-dkms' 'mhwd-nvidia-390xx')
 pkgver=390.157
-pkgrel=27
+pkgrel=28
 arch=('x86_64')
 url="https://www.nvidia.com/"
 license=('custom')
@@ -70,7 +70,7 @@ sha256sums=('162317a49aa5a521eb888ec12119bfe5a45cec4e8653efc575a2d04fb05bf581'
             '710009619b9638ef8969438c84e5e253ab32d57dcbd4c2e7bbe0e4eb0b4107dc'
             'f9c37768b3dfb9f7ebcb60cd5441d8fce14f1f9a29836fd9cfe1a205bc46d72a'
             '4c17a28b9491fc4672bb2e6775b827eb83be6bde2d6ba892c40d7919d3638d86'
-            'a04e78015e88e9596db73195b32da604872ef5c77c1062452e26aaba53180020'
+            '7255f73688a8ebc0899316d69c36d4bc38cb4f66a60fbf429ded01047bdd7d41'
             '34730c8cd8fafd5a31f4f4f57a11d48bb4d4f820e230019a0c82b1859a563b8a'
             '994675c116840e4d1eecf457f67c468f973424f3ef6657c6b72bee88ebbb982e'
             'e1bba1a8b4081730998cc747beeb85f70f152cae5993048619833f24d3c9f56b')
@@ -114,7 +114,7 @@ prepare() {
     patch -Np1 -i ../kernel-6.15.patch
     patch -Np1 -d kernel -i "${srcdir}"/kernel-6.17.patch
     patch -Np1 -i ../kernel-6.19.patch
-    patch -Np1 -d kernel -i "${srcdir}"/kernel-7.0.patch
+    patch -Np1 -i ../kernel-7.0.patch
     patch -Np1 -i ../kernel-6.19-5.10.patch
 
     # https://bbs.archlinux.org/viewtopic.php?id=312658
